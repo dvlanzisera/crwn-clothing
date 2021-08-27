@@ -17,8 +17,6 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 
-import { render } from '@testing-library/react';
-
 class App extends React.Component {
   unsubscribeFromAuth= null;
 
@@ -46,20 +44,23 @@ class App extends React.Component {
   }
 
     render() {
-    return (
+      return (
         <div>
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
           <Route exact path='/checkout' component={CheckoutPage} />
-          <Route exact path='/signin' render={() => 
-            this.props.currentUser ? (
-              <Redirect to='/' />
-              ) : (
-                <SignInAndSignUpPage />
-              )
-            }
+          <Route 
+            exact 
+            path='/signin' 
+            render={() => 
+              this.props.currentUser ? (
+                <Redirect to='/' />
+                ) : (
+                  <SignInAndSignUpPage />
+                )
+              }
           />
         </Switch>
         </div>
@@ -75,4 +76,7 @@ const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps)
+  (App);
